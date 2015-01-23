@@ -7,7 +7,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Klaims.Web", "src\Klaims.We
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Klaims.Framework", "src\Klaims.Framework\Klaims.Framework.kproj", "{97A8F605-279B-490D-A506-24392B4903D8}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Klaims.Scim", "Klaims.Scim\Klaims.Scim.kproj", "{A3A5E445-3E28-41B9-BAED-3E16D2B44B11}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Klaims.Scim", "src\Klaims.Scim\Klaims.Scim.kproj", "{A3A5E445-3E28-41B9-BAED-3E16D2B44B11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
