@@ -12,17 +12,17 @@
 
 	#endregion
 
-	public sealed class UserCoreResource : CoreResource
+	public sealed class UserResource : CoreResource
 	{
 		private HashSet<Group> groups = new HashSet<Group>();
 
 		private List<PhoneNumber> phoneNumbers = new List<PhoneNumber>();
 
-		public UserCoreResource()
+		public UserResource()
 		{
 		}
 
-		public UserCoreResource(string id, string userName, string givenName, string familyName)
+		public UserResource(string id, string userName, string givenName, string familyName)
 			: base(id)
 		{
 			UserName = userName;

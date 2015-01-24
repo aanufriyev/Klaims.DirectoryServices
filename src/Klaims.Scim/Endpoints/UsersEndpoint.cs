@@ -5,7 +5,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 
-	using Klaims.Scim.Models;
+	using Models;
 
 	using Microsoft.AspNet.Mvc;
 
@@ -18,7 +18,7 @@
 	public class UsersEndpoint : Controller
 	{
 		
-		private static readonly List<UserCoreResource> Resources = new List<UserCoreResource> { new UserCoreResource("2819c223-7f76-453a-919d-413861904646", "bjensen@example.com", "Barbara", "Jensen")};
+		private static readonly List<UserResource> Resources = new List<UserResource> { new UserResource("2819c223-7f76-453a-919d-413861904646", "bjensen@example.com", "Barbara", "Jensen")};
 
 		[HttpGet]
 		public IActionResult GetAll()
@@ -44,7 +44,7 @@
 		}
 
 		[HttpPost]
-		public void Create([FromBody] UserCoreResource item)
+		public void Create([FromBody] UserResource item)
 		{
 			if (!ModelState.IsValid)
 			{
