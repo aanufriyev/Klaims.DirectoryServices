@@ -2,9 +2,7 @@
 {
     using Microsoft.AspNet.Mvc;
 
-    using ScimConstants.Routes;
-
-    [Route(Templates.ResourceTypes)]
+	[Route(ScimConstants.Routes.Templates.ResourceTypes)]
     public class ResourceTypesEndpoint : Controller
     {
     }

@@ -1,65 +1,67 @@
 ﻿namespace Klaims.Scim.Endpoints
 {
-    using System.Collections.Generic;
-    using System.Linq;
+	#region
 
-    using Klaims.Scim.Models;
+	using System.Collections.Generic;
+	using System.Linq;
 
-    using Microsoft.AspNet.Mvc;
+	using Klaims.Scim.Models;
 
-    using ScimConstants.Routes;
+	using Microsoft.AspNet.Mvc;
 
-    [Route(Templates.Users)]
-    public class UsersEndpoint : Controller
-    {
-        private static readonly List<UserResource> Resources = new List<UserResource> { new UserResource { Id = "1", Title = "First Item" } };
+	#endregion
 
-        [HttpGet]
-        public IEnumerable<UserResource> GetAll()
-        {
-            return Resources;
-        }
+	[Route(ScimConstants.Routes.Templates.Users)]
+	public class UsersEndpoint : Controller
+	{
+		private static readonly List<UserResource> Resources = new List<UserResource> { new UserResource { Id = "1", Title = "First Item" } };
 
-        [HttpGet("{id:string}", Name = "GetByIdRoute")]
-        public IActionResult GetById(string id)
-        {
-            var item = Resources.FirstOrDefault(x => x.Id == id);
-            if (item == null)
-            {
-                return HttpNotFound();
-            }
+		[HttpGet]
+		public IEnumerable<UserResource> GetAll()
+		{
+			return Resources;
+		}
 
-            return new ObjectResult(item);
-        }
+		[HttpGet("{id:string}", Name = "GetByIdRoute")]
+		public IActionResult GetById(string id)
+		{
+			var item = Resources.FirstOrDefault(x => x.Id == id);
+			if (item == null)
+			{
+				return HttpNotFound();
+			}
 
-        [HttpPost]
-        public void Create([FromBody] UserResource item)
-        {
-            if (!ModelState.IsValid)
-            {
-                Context.Response.StatusCode = 400;
-            }
-            else
-            {
-                Resources.Add(item);
+			return new ObjectResult(item);
+		}
 
-                var url = Url.RouteUrl("GetByIdRoute", new { id = item.Id }, Request.Scheme, Request.Host.ToUriComponent());
+		[HttpPost]
+		public void Create([FromBody] UserResource item)
+		{
+			if (!ModelState.IsValid)
+			{
+				Context.Response.StatusCode = 400;
+			}
+			else
+			{
+				Resources.Add(item);
 
-                Context.Response.StatusCode = 201;
-                Context.Response.Headers["Location"] = url;
-            }
-        }
+				var url = Url.RouteUrl("GetByIdRoute", new { id = item.Id }, Request.Scheme, Request.Host.ToUriComponent());
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteItem(string id)
-        {
-            var item = Resources.FirstOrDefault(x => x.Id == id);
-            if (item == null)
-            {
-                return HttpNotFound();
-            }
-            Resources.Remove(item);
-            return new HttpStatusCodeResult(204); // 201 No Content
-        }
-    }
+				Context.Response.StatusCode = 201;
+				Context.Response.Headers["Location"] = url;
+			}
+		}
+
+		[HttpDelete("{id}")]
+		public IActionResult DeleteItem(string id)
+		{
+			var item = Resources.FirstOrDefault(x => x.Id == id);
+			if (item == null)
+			{
+				return HttpNotFound();
+			}
+			Resources.Remove(item);
+			return new HttpStatusCodeResult(204); // 201 No Content
+		}
+	}
 }

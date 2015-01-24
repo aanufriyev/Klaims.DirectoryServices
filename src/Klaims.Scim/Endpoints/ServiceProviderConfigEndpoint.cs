@@ -2,9 +2,7 @@
 {
     using Microsoft.AspNet.Mvc;
 
-    using ScimConstants.Routes;
-
-    [Route(Templates.ServiceProviderConfig)]
+    [Route(ScimConstants.Routes.Templates.ServiceProviderConfig)]
     public class ServiceProviderConfigEndpoint : Controller
     {
     }

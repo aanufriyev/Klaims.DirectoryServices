@@ -2,9 +2,7 @@
 {
     using Microsoft.AspNet.Mvc;
 
-    using ScimConstants.Routes;
-
-    [Route(Templates.Self)]
+    [Route(ScimConstants.Routes.Templates.Self)]
     public class SelfEndpoint : Controller
     {
     }

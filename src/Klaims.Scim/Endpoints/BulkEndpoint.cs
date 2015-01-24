@@ -2,9 +2,7 @@
 {
     using Microsoft.AspNet.Mvc;
 
-    using ScimConstants.Routes;
-
-    [Route(Templates.Bulk)]
+	[Route(ScimConstants.Routes.Templates.Bulk)]
     public class BulkEndpoint : Controller
     {
     }

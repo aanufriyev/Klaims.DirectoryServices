@@ -2,9 +2,7 @@
 {
     using Microsoft.AspNet.Mvc;
 
-    using ScimConstants.Routes;
-
-    [Route(Templates.Schemas)]
+    [Route(ScimConstants.Routes.Templates.Schemas)]
     public class SchemasEndpoint : Controller
     {
     }

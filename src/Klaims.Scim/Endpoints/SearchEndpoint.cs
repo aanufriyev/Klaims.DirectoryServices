@@ -2,9 +2,7 @@
 {
     using Microsoft.AspNet.Mvc;
 
-    using ScimConstants.Routes;
-    
-    [Route(Templates.Search)]
+    [Route(ScimConstants.Routes.Templates.Search)]
     public class SearchEndpoint : Controller
     {
     }

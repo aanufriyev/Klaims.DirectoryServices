@@ -1,10 +1,10 @@
 ﻿namespace Klaims.Scim
 {
-    public static class ScimConstants
+    public class ScimConstants
     {
-        public static class Routes
+        public class Routes
         {
-            public static class Templates
+            public class Templates
             {
                 public const string Users = "scim/Users";
                 public const string Groups = "scim/Groups";
