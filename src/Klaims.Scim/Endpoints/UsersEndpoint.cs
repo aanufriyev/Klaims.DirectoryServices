@@ -9,20 +9,29 @@
 
 	using Microsoft.AspNet.Mvc;
 
+	using Newtonsoft.Json;
+	using Newtonsoft.Json.Serialization;
+
 	#endregion
 
 	[Route(ScimConstants.Routes.Templates.Users)]
 	public class UsersEndpoint : Controller
 	{
-		private static readonly List<UserResource> Resources = new List<UserResource> { new UserResource { Id = "1", Title = "First Item" } };
+		
+		private static readonly List<UserResource> Resources = new List<UserResource> { new UserResource("2819c223-7f76-453a-919d-413861904646", "bjensen@example.com", "Barbara", "Jensen")};
 
 		[HttpGet]
-		public IEnumerable<UserResource> GetAll()
+		public IActionResult GetAll()
 		{
-			return Resources;
+			// Just for testing until i figure out how to implement something like IControllerConfiguration. Dint want to use IActionResult here.
+			var formatter = new JsonOutputFormatter
+				                {
+					                SerializerSettings = { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Include }
+				                };
+			return new JsonResult(Resources, formatter);
 		}
 
-		[HttpGet("{id:string}", Name = "GetByIdRoute")]
+		[HttpGet("{id}", Name = "GetByIdRoute")]
 		public IActionResult GetById(string id)
 		{
 			var item = Resources.FirstOrDefault(x => x.Id == id);

@@ -1,52 +1,42 @@
 ﻿namespace Klaims.Scim.Models
 {
-    using System.Collections.Generic;
+	public abstract class Resource
+	{
+		public ResourceMetadata Meta = new ResourceMetadata();
 
-    public class Resource
-    {
-        public Dictionary<string, List<ResourceAttribute>> Attributes { get; } = new Dictionary<string, List<ResourceAttribute>>();
+		protected Resource(string id)
+		{
+			Id = id;
+		}
 
-        public string Id { get; set; }
+		protected Resource()
+		{
+		}
 
-        public void AddAttribute(string uri, ResourceAttribute attribute)
-        {
-            var atttributeList = Attributes[uri];
+		public abstract string[] Schemas { get; }
 
-            if (atttributeList == null)
-            {
-                atttributeList = new List<ResourceAttribute>();
-                Attributes.Add(uri, atttributeList);
-            }
+		public string Id { get; }
 
-            atttributeList.Add(attribute);
-        }
+		public string ExternalId { get; set; }
 
-        public ResourceAttribute Get(string name)
-        {
-            foreach (var attributeList in Attributes.Values)
-            {
-                foreach (var attribute in attributeList)
-                {
-                    if (attribute.Name.Equals(name))
-                    {
-                        return attribute;
-                    }
-                }
-            }
+		public override int GetHashCode()
+		{
+			return Id?.GetHashCode() ?? base.GetHashCode();
+		}
 
-            return null;
-        }
-
-        public T GetValue<T>(string name)
-        {
-            var attribute = Get(name);
-
-            if (attribute == null)
-            {
-                return default(T);
-            }
-            var simpleAttribute = attribute as SimpleAttribute;
-            return simpleAttribute != null ? (T)simpleAttribute.Value : default(T);
-        }
-    }
+		public override bool Equals(object obj)
+		{
+			var other = obj as Resource;
+			if (other != null)
+			{
+				return Id.Equals(other.Id);
+			}
+			var otherId = obj as string;
+			if (otherId != null)
+			{
+				return Id.Equals(otherId);
+			}
+			return false;
+		}
+	}
 }

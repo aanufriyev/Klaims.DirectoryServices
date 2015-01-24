@@ -12,7 +12,6 @@ using Microsoft.Framework.ConfigurationModel;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.Framework.Logging.Console;
-using Klaims.Web.Models;
 
 namespace Klaims.Web
 {
@@ -31,14 +30,6 @@ namespace Klaims.Web
         // This method gets called by the runtime.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add EF services to the services container.
-            services.AddEntityFramework(Configuration)
-                .AddSqlServer()
-                .AddDbContext<ApplicationDbContext>();
-
-            // Add Identity services to the services container.
-            services.AddDefaultIdentity<ApplicationDbContext, ApplicationUser, IdentityRole>(Configuration);
-
             // Add MVC services to the services container.
             services.AddMvc();
 
