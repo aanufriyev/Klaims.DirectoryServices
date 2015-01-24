@@ -7,6 +7,7 @@
 	using System.Linq;
 
 	using Klaims.Framework.Utility;
+	using Klaims.Framework.Utility.Extensions;
 
 	using Newtonsoft.Json;
 
@@ -57,7 +58,7 @@
 			{
 				if (value != null && value.Any())
 				{
-					phoneNumbers = value.Where(pn => pn != null && !string.IsNullOrEmpty(pn.Value)).ToList();
+					phoneNumbers = value.Where(pn => !string.IsNullOrEmpty(pn?.Value)).ToList();
 				}
 				else
 				{
@@ -132,11 +133,8 @@
 		public void AddEmail(string newEmail)
 		{
 			Check.Argument.IsNotNullOrEmpty(newEmail, "newEmail");
+			Ensure.Collection.IsNotNull(Emails);
 
-			if (Emails == null)
-			{
-				Emails = new List<Email>(1);
-			}
 			if (Emails.Any(m => m.Value.Equals(newEmail)))
 			{
 				throw new ArgumentException("Already contains email " + newEmail);
@@ -147,22 +145,20 @@
 
 		public void AddPhoneNumber(string newPhoneNumber)
 		{
-			if (newPhoneNumber == null || newPhoneNumber.Trim().Length == 0)
+			if (!newPhoneNumber.HasText())
 			{
 				return;
 			}
 
-			if (phoneNumbers == null)
-			{
-				phoneNumbers = new List<PhoneNumber>(1);
-			}
+			Ensure.Collection.IsNotNull(PhoneNumbers);
+
 			if (PhoneNumbers.Any(m => m.Value.Equals(newPhoneNumber)))
 			{
 				throw new ArgumentException("Already contains phoneNumber " + newPhoneNumber);
 			}
 
 			var number = new PhoneNumber { Value = newPhoneNumber };
-			phoneNumbers.Add(number);
+			PhoneNumbers.Add(number);
 		}
 
 		public sealed class Group
