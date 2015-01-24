@@ -1,15 +1,15 @@
 ﻿namespace Klaims.Scim.Models
 {
-	public abstract class Resource
+	public abstract class CoreResource
 	{
 		public ResourceMetadata Meta = new ResourceMetadata();
 
-		protected Resource(string id)
+		protected CoreResource(string id)
 		{
 			Id = id;
 		}
 
-		protected Resource()
+		protected CoreResource()
 		{
 		}
 
@@ -26,7 +26,7 @@
 
 		public override bool Equals(object obj)
 		{
-			var other = obj as Resource;
+			var other = obj as CoreResource;
 			if (other != null)
 			{
 				return Id.Equals(other.Id);
