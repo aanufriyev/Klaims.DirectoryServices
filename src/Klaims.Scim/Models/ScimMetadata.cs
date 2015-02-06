@@ -6,13 +6,13 @@
 
 	#endregion
 
-	public class ResourceMetadata
+	public class ScimMetadata
 	{
-		public ResourceMetadata()
+		public ScimMetadata()
 		{
 		}
 
-		public ResourceMetadata(string resourceType, DateTime created, DateTime lastModified, int version)
+		public ScimMetadata(string resourceType, DateTime created, DateTime lastModified, int version)
 		{
 			ResourceType = resourceType;
 			Created = created;

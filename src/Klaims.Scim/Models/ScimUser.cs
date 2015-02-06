@@ -13,17 +13,17 @@
 
 	#endregion
 
-	public sealed class UserResource : CoreResource
+	public sealed class ScimUser : ScimCore
 	{
 		private HashSet<Group> groups = new HashSet<Group>();
 
 		private List<PhoneNumber> phoneNumbers = new List<PhoneNumber>();
 
-		public UserResource()
+		public ScimUser()
 		{
 		}
 
-		public UserResource(string id, string userName, string givenName, string familyName)
+		public ScimUser(string id, string userName, string givenName, string familyName)
 			: base(id)
 		{
 			UserName = userName;
