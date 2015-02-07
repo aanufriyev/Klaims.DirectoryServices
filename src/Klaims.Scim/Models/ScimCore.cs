@@ -32,11 +32,7 @@
 				return Id.Equals(other.Id);
 			}
 			var otherId = obj as string;
-			if (otherId != null)
-			{
-				return Id.Equals(otherId);
-			}
-			return false;
+			return otherId != null && Id.Equals(otherId);
 		}
 	}
 }

@@ -3,7 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 
-	using DefaultNamespace;
+	using Klaims.Framework;
 
 	using Newtonsoft.Json;
 
@@ -19,9 +19,7 @@
 		public enum Role
 		{
 			Member,
-
 			Reader,
-
 			Writer
 		}
 

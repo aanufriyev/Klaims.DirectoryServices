@@ -3,11 +3,7 @@
 	"dependencies": {
 		"EntityFramework": "7.0.0-*",
 		"EntityFramework.SqlServer": "7.0.0-*",
-		"EntityFramework.Commands": "7.0.0-*",
-		"Microsoft.AspNet.Mvc": "6.0.0-beta4-*",
-		"Newtonsoft.Json": "6.0.6",
-		"Klaims.Framework": ""
-
+		"EntityFramework.Commands": "7.0.0-*"
 	},
 
     "frameworks" : {
@@ -17,7 +13,7 @@
         },
         "aspnetcore50" : { 
             "dependencies": {
-                "System.Runtime": "4.0.20-beta-*"
+                "System.Runtime": "4.0.20-beta-22416"
             }
         }
     }

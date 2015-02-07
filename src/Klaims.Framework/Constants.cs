@@ -1,4 +1,4 @@
-﻿namespace DefaultNamespace
+﻿namespace Klaims.Framework
 {
 	public class Constants
 	{
