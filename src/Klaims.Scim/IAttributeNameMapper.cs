@@ -1,4 +1,4 @@
-﻿namespace Klaims.Scim.DataAccess
+﻿namespace Klaims.Scim
 {
 	public interface IAttributeNameMapper
 	{

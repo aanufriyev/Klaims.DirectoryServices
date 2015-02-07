@@ -6,7 +6,7 @@ namespace Klaims.Scim.Query.Filter
 	using System.Collections.Generic;
 	using System.Text;
 
-	public class FilterParser
+	public class ScimFilterParser
 	{
 		public static FilterNode Parse(string filter)
 		{
@@ -52,11 +52,9 @@ namespace Klaims.Scim.Query.Filter
 			var branchNode = parent as BranchNode;
 			if (branchNode != null)
 			{
-				var bn = branchNode;
-
-				if (!bn.HasBothChildren)
+				if (!branchNode.HasBothChildren)
 				{
-					bn.AddNode(child);
+					branchNode.AddNode(child);
 					return parent;
 				}
 				var childNode = child as BranchNode;
@@ -76,9 +74,9 @@ namespace Klaims.Scim.Query.Filter
 			return child;
 		}
 
-		private static FilterNode ParseNode(Position pos, string filter)
+		private static FilterNode ParseNode(Position position, string filter)
 		{
-			var attribute = ParseToken(pos, filter);
+			var attribute = ParseToken(position, filter);
 
 			var branchOperator = Operator.GetByName(attribute);
 
@@ -91,18 +89,18 @@ namespace Klaims.Scim.Query.Filter
 				return new BranchNode(branchOperator);
 			}
 
-			var filterOperator = Operator.GetByName(ParseToken(pos, filter));
+			var filterOperator = Operator.GetByName(ParseToken(position, filter));
 
-			var curPos = pos.Value;
+			var currentPosition = position.Value;
 
 			string value = null;
 
-			var valOrOperator = ParseToken(pos, filter);
+			var valOrOperator = ParseToken(position, filter);
 
 			if (!Operator.GetByName(valOrOperator).Equals(Operator.Unknown))
 			{
 				// move back
-				pos.Set(curPos);
+				position.Set(currentPosition);
 			}
 			else
 			{
@@ -157,13 +155,11 @@ namespace Klaims.Scim.Query.Filter
 				switch (c)
 				{
 					case ' ':
-
 						if (!foundNonSpace || (startQuote && !endQuote))
 						{
 							continue;
 						}
 						return sb.ToString();
-
 					default:
 						sb.Append(c);
 						foundNonSpace = true;

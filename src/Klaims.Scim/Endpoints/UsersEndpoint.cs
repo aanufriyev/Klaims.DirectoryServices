@@ -5,7 +5,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 
-	using Models;
+	using Klaims.Scim.Resources;
 
 	using Microsoft.AspNet.Mvc;
 

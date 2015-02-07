@@ -1,4 +1,4 @@
-﻿namespace Klaims.Scim.Services
+﻿namespace Klaims.Scim.Rest
 {
 	public interface IResourceManager<TResource>
 		where TResource : class

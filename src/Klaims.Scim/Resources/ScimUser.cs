@@ -1,4 +1,4 @@
-﻿namespace Klaims.Scim.Models
+﻿namespace Klaims.Scim.Resources
 {
 	#region
 
@@ -180,14 +180,15 @@
 				Type = type;
 			}
 
-			public string Value { get; set; }
+			public string Value { get; }
 
-			public string Display { get; set; }
+			public string Display { get; }
 
-			public MembershipType Type { get; set; }
+			public MembershipType Type { get; }
 
 			public override int GetHashCode()
 			{
+				//TODO: Need imutable hascode
 				const int Prime = 31;
 				var result = 1;
 				result = Prime * result + (Display?.GetHashCode() ?? 0);
@@ -326,11 +327,13 @@
 
 			public override int GetHashCode()
 			{
+				//TODO: Need imutable hascode
 				var result = Value?.GetHashCode() ?? 0;
 				result = 31 * result + (Type?.GetHashCode() ?? 0);
 				result = 31 * result + (Primary ? 1 : 0);
 				return result;
 			}
+
 			public class EmailType
 			{
 				public static readonly EmailType Work = new EmailType("work");
@@ -347,11 +350,7 @@
 				public override bool Equals(object obj)
 				{
 					var other = obj as EmailType;
-					if (other != null && other.name.Equals(this.name))
-					{
-						return true;
-					}
-					return false;
+					return other != null && other.name.Equals(name);
 				}
 
 				public override int GetHashCode()

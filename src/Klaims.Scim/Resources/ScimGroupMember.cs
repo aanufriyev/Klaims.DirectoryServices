@@ -1,4 +1,4 @@
-﻿namespace Klaims.Scim.Models
+﻿namespace Klaims.Scim.Resources
 {
 	using System;
 	using System.Collections.Generic;
