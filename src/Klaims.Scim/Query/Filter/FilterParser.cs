@@ -1,4 +1,6 @@
-﻿namespace Klaims.Scim.Query.Filter
+﻿// Ported from eSCIMo under ASL 2.0 
+
+namespace Klaims.Scim.Query.Filter
 {
 	using System;
 	using System.Collections.Generic;
