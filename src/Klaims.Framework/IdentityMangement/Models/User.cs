@@ -7,7 +7,7 @@
 
 	using Klaims.Framework.Utility;
 
-	public class UserAccount
+	public class User
 	{
 		public virtual Guid Id { get; protected internal set; }
 
@@ -85,14 +85,11 @@
 		}
 
 
-
-
 		// Claims 
 		protected virtual ICollection<UserClaim> ClaimCollection { get; set; }
 		protected internal void AddClaim(UserClaim item) => ClaimCollection.Add(item);
 		protected internal void RemoveClaim(UserClaim item) => ClaimCollection.Remove(item);
 		public IEnumerable<UserClaim> Claims => ClaimCollection;
-
 
 
 		// Phones (work and mobile)

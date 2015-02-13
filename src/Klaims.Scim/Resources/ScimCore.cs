@@ -6,7 +6,7 @@
 
 		protected ScimCore(string id)
 		{
-			Id = id;
+			this.Id = id;
 		}
 
 		protected ScimCore()
@@ -21,7 +21,7 @@
 
 		public override int GetHashCode()
 		{
-			return Id?.GetHashCode() ?? base.GetHashCode();
+			return this.Id?.GetHashCode() ?? base.GetHashCode();
 		}
 
 		public override bool Equals(object obj)

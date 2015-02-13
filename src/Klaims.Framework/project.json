@@ -2,6 +2,7 @@
 	"version": "1.0.0-*",
 	"dependencies": {
 		"Microsoft.AspNet.Diagnostics": "1.0.0-beta4-*",
+		"System.ComponentModel": "4.0.0-beta-*",
 		"System.ComponentModel.Annotations": "4.0.10-beta-*"
 	},
 
@@ -13,7 +14,7 @@
 		},
 		"aspnetcore50": {
 			"dependencies": {
-				"System.Runtime": "4.0.20-beta-*",
+				"System.Runtime": "4.0.20-beta-*"
 			}
 		}
 	}
