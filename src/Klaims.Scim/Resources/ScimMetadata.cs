@@ -12,17 +12,20 @@
 		{
 		}
 
-		public ScimMetadata(string resourceType, DateTime created, DateTime lastModified, int version)
+		public ScimMetadata(string resourceType, string location, DateTime created, DateTime lastModified, string version)
 		{
-			ResourceType = resourceType;
-			Created = created;
-			LastModified = lastModified;
-			Version = version;
+			this.ResourceType = resourceType;
+			this.Location = location;
+			this.Created = created;
+			this.LastModified = lastModified;
+			this.Version = version;
 		}
 
 		public string ResourceType { get; set; }
 
-		public int Version { get; set; }
+		public string Location { get; set; }
+
+		public string Version { get; set; }
 
 		public DateTime? Created { get; set; } = new DateTime();
 

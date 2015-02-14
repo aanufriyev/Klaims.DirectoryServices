@@ -2,7 +2,7 @@
 {
 	using System.Collections.Generic;
 
-	public class ScimGroup : ScimCore
+	public class ScimGroup : ScimResource
 	{
 		public ScimGroup()
 		{
@@ -27,9 +27,15 @@
 
 		public override string ToString()
 		{
-#pragma warning disable 162
-			return $"(Group id: {Id}, name: {DisplayName}, created: {Meta.Created}, modified: {Meta.LastModified}, version: {Meta.Version}, members: {Members})";
-#pragma warning restore 162
+			// Until string interpolations works
+			return string.Format(
+				"(Group id: {0}, name: {1}, created: {2}, modified: {3}, version: {4}, members: {5})",
+				this.Id,
+				this.DisplayName,
+				this.Meta.Created,
+				this.Meta.LastModified,
+				this.Meta.Version,
+				this.Members);
 		}
 	}
 }

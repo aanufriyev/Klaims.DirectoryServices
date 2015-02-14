@@ -1,17 +1,17 @@
 ﻿namespace Klaims.Scim.Resources
 {
-	public abstract class ScimCore
+	public abstract class ScimResource
 	{
-		public ScimMetadata Meta = new ScimMetadata();
-
-		protected ScimCore(string id)
+		protected ScimResource(string id)
 		{
 			this.Id = id;
 		}
 
-		protected ScimCore()
+		protected ScimResource()
 		{
 		}
+
+		public ScimMetadata Meta { get; protected set; } = new ScimMetadata();
 
 		public abstract string[] Schemas { get; }
 
@@ -26,13 +26,13 @@
 
 		public override bool Equals(object obj)
 		{
-			var other = obj as ScimCore;
+			var other = obj as ScimResource;
 			if (other != null)
 			{
-				return Id.Equals(other.Id);
+				return this.Id.Equals(other.Id);
 			}
 			var otherId = obj as string;
-			return otherId != null && Id.Equals(otherId);
+			return otherId != null && this.Id.Equals(otherId);
 		}
 	}
 }

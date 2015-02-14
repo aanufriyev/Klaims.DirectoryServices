@@ -4,17 +4,11 @@
 
 	public sealed class Operator
 	{
-		#region Constructors and Destructors
-
 		private Operator(string val, string desc)
 		{
 			this.name = val;
 			this.description = desc;
 		}
-
-		#endregion
-
-		#region Static Fields
 
 		public static readonly Operator And = new Operator("and", "logical and");
 
@@ -38,32 +32,24 @@
 
 		public static readonly Operator Unknown = new Operator("", "unknown operator");
 
-		#endregion
-
-		#region Fields
-
 		private readonly string description;
 
 		private readonly string name;
 
-		#endregion
-
-		#region Public Methods and Operators
-
 		public override bool Equals(object type)
 		{
 			var identityType = type as Operator;
-			return identityType != null && identityType.name.Equals(name, StringComparison.OrdinalIgnoreCase);
+			return identityType != null && identityType.name.Equals(this.name, StringComparison.OrdinalIgnoreCase);
 		}
 
 		public override int GetHashCode()
 		{
-			return name.GetHashCode();
+			return this.name.GetHashCode();
 		}
 
 		public override string ToString()
 		{
-			return name;
+			return this.name;
 		}
 
 		public static Operator GetByName(string name)
@@ -113,7 +99,5 @@
 
 			return Unknown;
 		}
-
-		#endregion
 	}
 }

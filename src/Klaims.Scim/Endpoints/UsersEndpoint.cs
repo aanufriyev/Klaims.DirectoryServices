@@ -2,75 +2,70 @@
 {
 	#region
 
-	using System.Collections.Generic;
-	using System.Linq;
+	using System;
 
 	using Klaims.Scim.Resources;
+	using Klaims.Scim.Rest;
 
 	using Microsoft.AspNet.Mvc;
-
-	using Newtonsoft.Json;
-	using Newtonsoft.Json.Serialization;
 
 	#endregion
 
 	[Route(ScimConstants.Routes.Templates.Users)]
-	public class UsersEndpoint : Controller
+	public class UsersEndpoint : ScimEndpoint
 	{
-		
-		private static readonly List<ScimUser> Resources = new List<ScimUser> { new ScimUser("2819c223-7f76-453a-919d-413861904646", "bjensen@example.com", "Barbara", "Jensen")};
+		private readonly IUserResourceManager<ScimUser> resourceManager;
+
+		public UsersEndpoint(IUserResourceManager<ScimUser> resourceManager)
+		{
+			this.resourceManager = resourceManager;
+		}
 
 		[HttpGet]
-		public IActionResult GetAll()
+		public ScimListResponse<ScimUser> GetAll()
 		{
-			// Just for testing until i figure out how to implement something like IControllerConfiguration. Dint want to use IActionResult here.
-			var formatter = new JsonOutputFormatter
-				                {
-					                SerializerSettings = { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Include }
-				                };
-			return new JsonResult(Resources, formatter);
+			var queryResults = this.resourceManager.Query("id pr");
+			return new ScimListResponse<ScimUser>(queryResults, 1);
 		}
 
 		[HttpGet("{id}", Name = "GetByIdRoute")]
-		public IActionResult GetById(string id)
+		public ScimUser GetById(string id)
 		{
-			var item = Resources.FirstOrDefault(x => x.Id == id);
-			if (item == null)
+			var result = this.resourceManager.GetById(id);
+			if (result == null)
 			{
-				return HttpNotFound();
+				// this will be mappped later in filter
+				throw new Exception("User not found");
 			}
 
-			return new ObjectResult(item);
+			return result;
 		}
 
 		[HttpPost]
 		public void Create([FromBody] ScimUser item)
 		{
-			if (!ModelState.IsValid)
+			if (!this.ModelState.IsValid)
 			{
-				Context.Response.StatusCode = 400;
+				this.Context.Response.StatusCode = 400;
 			}
 			else
 			{
-				Resources.Add(item);
-
-				var url = Url.RouteUrl("GetByIdRoute", new { id = item.Id }, Request.Scheme, Request.Host.ToUriComponent());
-
-				Context.Response.StatusCode = 201;
-				Context.Response.Headers["Location"] = url;
+				this.resourceManager.Create(item);
+				var url = this.Url.RouteUrl("GetByIdRoute", new { id = item.Id }, this.Request.Scheme, this.Request.Host.ToUriComponent());
+				this.Context.Response.StatusCode = 201;
+				this.Context.Response.Headers["Location"] = url;
 			}
 		}
 
 		[HttpDelete("{id}")]
-		public IActionResult DeleteItem(string id)
+		public ScimUser DeleteItem(string id)
 		{
-			var item = Resources.FirstOrDefault(x => x.Id == id);
-			if (item == null)
+			var removed = this.resourceManager.Remove(id, -1);
+			if (removed == null)
 			{
-				return HttpNotFound();
+				throw new Exception("User not found");
 			}
-			Resources.Remove(item);
-			return new HttpStatusCodeResult(204); // 201 No Content
+			return removed; // 201 No Content
 		}
 	}
 }

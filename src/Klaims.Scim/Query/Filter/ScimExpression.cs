@@ -1,8 +1,8 @@
 ﻿namespace Klaims.Scim.Query.Filter
 {
-	public abstract class FilterNode
+	public abstract class ScimExpression
 	{
-		protected FilterNode(Operator filterOperator)
+		protected ScimExpression(Operator filterOperator)
 		{
 			this.Operator = filterOperator;
 		}

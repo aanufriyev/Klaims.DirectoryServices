@@ -8,21 +8,21 @@ namespace Klaims.Scim.Query
 	using Klaims.Scim.Query.Filter;
 
 	public class ScimSearchQueryConverter<T> : ISearchQueryConverter<T>
-		where T : UserAccount
+		where T : User
 	{
 		public Expression<Func<T, bool>> Convert(string filter, string sortBy, bool ascending, IAttributeNameMapper mapper = null)
 		{
 			var filterNode = ScimFilterParser.Parse(filter);
-			return BuildExpression(filterNode, mapper, null);
+			return this.BuildExpression(filterNode, mapper, null);
 		}
 
-		private Expression<Func<T, bool>> BuildExpression(FilterNode filter, IAttributeNameMapper mapper, string prefix)
+		private Expression<Func<T, bool>> BuildExpression(ScimExpression filter, IAttributeNameMapper mapper, string prefix)
 		{
-			var branchNode = filter as BranchNode;
+			var branchNode = filter as BranchExpression;
 			if (branchNode != null)
 			{
-				var leftNodeExpression = BuildExpression(branchNode.LeftNode, mapper, prefix);
-				var rightNodeExpression = BuildExpression(branchNode.RightNode, mapper, prefix);
+				var leftNodeExpression = this.BuildExpression(branchNode.Left, mapper, prefix);
+				var rightNodeExpression = this.BuildExpression(branchNode.Right, mapper, prefix);
 				if (filter.Operator.Equals(Operator.And))
 				{
 					return PredicateBuilder.False<T>().And(leftNodeExpression).And(rightNodeExpression);
@@ -34,11 +34,11 @@ namespace Klaims.Scim.Query
 				throw new InvalidOperationException("Unsupported branch operator");
 			}
 
-			var terminalNode = filter as TerminalNode;
+			var terminalNode = filter as TerminalExpression;
 			if (terminalNode != null)
 			{
 				var parameter = Expression.Parameter(typeof(T));
-				var property = Expression.Property(parameter, terminalNode.Attribute);
+				var property = Expression.Property(parameter, mapper.MapToInternal(terminalNode.Attribute));
 
 				Expression expression = null;
 				if (filter.Operator.Equals(Operator.Eq))

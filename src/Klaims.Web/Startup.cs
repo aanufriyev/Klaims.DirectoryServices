@@ -15,7 +15,16 @@ using Microsoft.Framework.Logging.Console;
 
 namespace Klaims.Web
 {
-    public class Startup
+	using System.Linq;
+
+	using Klaims.Scim.Rest;
+
+	using Microsoft.AspNet.Mvc;
+
+	using Newtonsoft.Json;
+	using Newtonsoft.Json.Serialization;
+
+	public class Startup
     {
         public Startup(IHostingEnvironment env)
         {
@@ -30,14 +39,17 @@ namespace Klaims.Web
         // This method gets called by the runtime.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add MVC services to the services container.
-            services.AddMvc();
+			// Add MVC services to the services container.
+			services.AddMvc().Configure<MvcOptions>(options =>
+			{
+				options.OutputFormatters.Add(new ScimJsonOutputFormatter());
+			});
 
-            // Uncomment the following line to add Web API servcies which makes it easier to port Web API 2 controllers.
-            // You need to add Microsoft.AspNet.Mvc.WebApiCompatShim package to project.json
-            // services.AddWebApiConventions();
+			// Uncomment the following line to add Web API servcies which makes it easier to port Web API 2 controllers.
+			// You need to add Microsoft.AspNet.Mvc.WebApiCompatShim package to project.json
+			// services.AddWebApiConventions();
 
-        }
+		}
 
         // Configure is called after ConfigureServices is called.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerfactory)

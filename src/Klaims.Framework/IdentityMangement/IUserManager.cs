@@ -5,7 +5,7 @@
 
 	public interface IUserManager<TUser> where TUser : User
 	{
-		IUserQuery<TUser> Query { get; }
+		IQueryableUserRepository<TUser> Queryable { get; }
 
 		void Create(TUser user);
 

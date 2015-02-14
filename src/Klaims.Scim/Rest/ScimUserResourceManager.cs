@@ -1,6 +1,7 @@
 ﻿namespace Klaims.Scim.Rest
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Linq;
 
 	using Klaims.Framework.IdentityMangement;
@@ -11,34 +12,43 @@
 
 	public class ScimUserResourceResourceManager : IUserResourceManager<ScimUser>
 	{
-		private readonly ISearchQueryConverter<UserAccount> searchQueryConverter;
+		private static readonly List<ScimUser> Resources = new List<ScimUser>
+			                                                   {
+				                                                   new ScimUser(
+					                                                   "2819c223-7f76-453a-919d-413861904646",
+					                                                   "bjensen@example.com",
+					                                                   "Barbara",
+					                                                   "Jensen")
+			                                                   };
 
-		private readonly IQueryableUserRepository<UserAccount> userRepository;
+		private readonly ISearchQueryConverter<User> searchQueryConverter;
 
-		public ScimUserResourceResourceManager(IQueryableUserRepository<UserAccount> userRepository)
+		private readonly IUserManager<User> userManager;
+
+		public ScimUserResourceResourceManager(IUserManager<User> userManager)
 		{
-			this.userRepository = userRepository;
-			searchQueryConverter = new ScimSearchQueryConverter<UserAccount>();
+			this.userManager = userManager;
+			this.searchQueryConverter = new ScimSearchQueryConverter<User>();
 		}
 
-		public SearchResults<ScimUser> Query(string filter)
+		public IEnumerable<ScimUser> Query(string filter)
 		{
-			var filterPredicate = searchQueryConverter.Convert(filter, null, true);
-			var result = userRepository.Users.Where(filterPredicate).ToList();
-			return null;
+			Check.Argument.IsNotNullOrEmpty(filter, "filter");
+			return new List<ScimUser>(Resources);
 		}
 
-		public SearchResults<ScimUser> Query(string filter, int skip, int count)
+		public IEnumerable<ScimUser> Query(string filter, int skip, int count)
 		{
-			throw new NotImplementedException();
+			Check.Argument.IsNotNullOrEmpty(filter, "filter");
+			// Looks like crap. Was bad idea to expose queryable.
+			this.userManager.Queryable.Query(q => q.Where(this.searchQueryConverter.Convert(filter, null, true)));
+			return new List<ScimUser>(Resources);
 		}
 
 		public ScimUser GetById(string id)
 		{
 			Check.Argument.IsNotNullOrEmpty(id, "id");
-			var userAccount = userRepository.FindById(Guid.Parse(id));
-
-			return null;
+			return Resources[0];
 		}
 
 		public ScimUser Create(ScimUser resource)

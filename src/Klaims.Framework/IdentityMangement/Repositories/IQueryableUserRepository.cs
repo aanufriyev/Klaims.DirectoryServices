@@ -4,7 +4,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 
-	public interface IUserQuery<TUser> : IUserRepository<TUser>
+	public interface IQueryableUserRepository<TUser> : IUserRepository<TUser>
 		where TUser : class
 	{
 		IQueryable<TUser> Users { get; }

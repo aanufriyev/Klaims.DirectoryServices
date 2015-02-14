@@ -6,14 +6,14 @@
 	using System.Collections.Generic;
 	using System.Linq;
 
-	using Klaims.Framework.Utility;
-	using Klaims.Framework.Utility.Extensions;
+	using Framework.Utility;
+	using Framework.Utility.Extensions;
 
 	using Newtonsoft.Json;
 
 	#endregion
 
-	public sealed class ScimUser : ScimCore
+	public class ScimUser : ScimResource
 	{
 		private HashSet<Group> groups = new HashSet<Group>();
 
@@ -26,8 +26,8 @@
 		public ScimUser(string id, string userName, string givenName, string familyName)
 			: base(id)
 		{
-			UserName = userName;
-			Name = new CommonName(givenName, familyName);
+			this.UserName = userName;
+			this.Name = new CommonName(givenName, familyName);
 		}
 
 		public string UserName { get; set; }
@@ -40,11 +40,11 @@
 		{
 			get
 			{
-				return new HashSet<Group>(groups);
+				return new HashSet<Group>(this.groups);
 			}
 			set
 			{
-				groups = new HashSet<Group>(value);
+				this.groups = new HashSet<Group>(value);
 			}
 		}
 
@@ -52,17 +52,17 @@
 		{
 			get
 			{
-				return phoneNumbers;
+				return this.phoneNumbers;
 			}
 			set
 			{
 				if (value != null && value.Any())
 				{
-					phoneNumbers = value.Where(pn => !string.IsNullOrEmpty(pn?.Value)).ToList();
+					this.phoneNumbers = value.Where(pn => !string.IsNullOrEmpty(pn?.Value)).ToList();
 				}
 				else
 				{
-					phoneNumbers = value;
+					this.phoneNumbers = value;
 				}
 			}
 		}
@@ -96,51 +96,51 @@
 		{
 			get
 			{
-				if (Emails == null || !Emails.Any())
+				if (this.Emails == null || !this.Emails.Any())
 				{
 					return null;
 				}
 
-				var primaryEmail = Emails.FirstOrDefault(m => m.Primary) ?? Emails[0];
+				var primaryEmail = this.Emails.FirstOrDefault(m => m.Primary) ?? this.Emails[0];
 				return primaryEmail.Value;
 			}
 			set
 			{
 				var newPrimaryEmail = new Email { Primary = true, Value = value };
-				if (Emails == null)
+				if (this.Emails == null)
 				{
-					Emails = new List<Email>(1);
+					this.Emails = new List<Email>(1);
 				}
 
-				var currentPrimaryEmail = Emails.FirstOrDefault(m => m.Primary);
+				var currentPrimaryEmail = this.Emails.FirstOrDefault(m => m.Primary);
 				if (currentPrimaryEmail != null)
 				{
-					Emails.Remove(currentPrimaryEmail);
+					this.Emails.Remove(currentPrimaryEmail);
 				}
 
-				Emails.Insert(0, newPrimaryEmail);
+				this.Emails.Insert(0, newPrimaryEmail);
 			}
 		}
 
 		[JsonIgnore]
-		public string GivenName => Name?.GivenName;
+		public string GivenName => this.Name?.GivenName;
 
 		[JsonIgnore]
-		public string FamilyName => Name?.FamilyName;
+		public string FamilyName => this.Name?.FamilyName;
 
 		public override string[] Schemas => new[] { "urn:ietf:params:scim:schemas:core:2.0:User" };
 
 		public void AddEmail(string newEmail)
 		{
 			Check.Argument.IsNotNullOrEmpty(newEmail, "newEmail");
-			Ensure.Collection.IsNotNull(Emails);
+			Ensure.Collection.IsNotNull(this.Emails);
 
-			if (Emails.Any(m => m.Value.Equals(newEmail)))
+			if (this.Emails.Any(m => m.Value.Equals(newEmail)))
 			{
 				throw new ArgumentException("Already contains email " + newEmail);
 			}
 			var e = new Email { Value = newEmail };
-			Emails.Add(e);
+			this.Emails.Add(e);
 		}
 
 		public void AddPhoneNumber(string newPhoneNumber)
@@ -150,15 +150,15 @@
 				return;
 			}
 
-			Ensure.Collection.IsNotNull(PhoneNumbers);
+			Ensure.Collection.IsNotNull(this.PhoneNumbers);
 
-			if (PhoneNumbers.Any(m => m.Value.Equals(newPhoneNumber)))
+			if (this.PhoneNumbers.Any(m => m.Value.Equals(newPhoneNumber)))
 			{
 				throw new ArgumentException("Already contains phoneNumber " + newPhoneNumber);
 			}
 
 			var number = new PhoneNumber { Value = newPhoneNumber };
-			PhoneNumbers.Add(number);
+			this.PhoneNumbers.Add(number);
 		}
 
 		public sealed class Group
@@ -175,25 +175,25 @@
 
 			public Group(string value, string display, MembershipType type)
 			{
-				Value = value;
-				Display = display;
-				Type = type;
+				this.Value = value;
+				this.Display = display;
+				this.Type = type;
 			}
 
-			public string Value { get; }
+			public string Value { get; set; }
 
-			public string Display { get; }
+			public string Display { get; set; }
 
-			public MembershipType Type { get; }
+			public MembershipType Type { get; set; }
 
 			public override int GetHashCode()
 			{
 				//TODO: Need imutable hascode
 				const int Prime = 31;
 				var result = 1;
-				result = Prime * result + (Display?.GetHashCode() ?? 0);
-				result = Prime * result + (Value?.GetHashCode() ?? 0);
-				result = Prime * result + (Type?.GetHashCode() ?? 0);
+				result = Prime * result + (this.Display?.GetHashCode() ?? 0);
+				result = Prime * result + (this.Value?.GetHashCode() ?? 0);
+				result = Prime * result + (this.Type?.GetHashCode() ?? 0);
 				return result;
 			}
 
@@ -207,39 +207,39 @@
 				{
 					return false;
 				}
-				if (GetType() != obj.GetType())
+				if (this.GetType() != obj.GetType())
 				{
 					return false;
 				}
 				var other = (Group)obj;
-				if (Display == null)
+				if (this.Display == null)
 				{
 					if (other.Display != null)
 					{
 						return false;
 					}
 				}
-				else if (!Display.Equals(other.Display))
+				else if (!this.Display.Equals(other.Display))
 				{
 					return false;
 				}
-				if (Value == null)
+				if (this.Value == null)
 				{
 					if (other.Value != null)
 					{
 						return false;
 					}
 				}
-				else if (!Value.Equals(other.Value))
+				else if (!this.Value.Equals(other.Value))
 				{
 					return false;
 				}
-				return Type == other.Type;
+				return this.Type == other.Type;
 			}
 
 			public override string ToString()
 			{
-				return string.Format("(id: {0}, name: {1}, type: {2})", Value, Display, Type);
+				return string.Format("(id: {0}, name: {1}, type: {2})", this.Value, this.Display, this.Type);
 			}
 
 			public class MembershipType
@@ -257,7 +257,7 @@
 
 				public override string ToString()
 				{
-					return name;
+					return this.name;
 				}
 			}
 		}
@@ -270,9 +270,9 @@
 
 			public CommonName(string givenName, string familyName)
 			{
-				GivenName = givenName;
-				FamilyName = familyName;
-				Formatted = givenName + " " + familyName;
+				this.GivenName = givenName;
+				this.FamilyName = familyName;
+				this.Formatted = givenName + " " + familyName;
 			}
 
 			public string FamilyName { get; set; }
@@ -302,22 +302,22 @@
 				{
 					return true;
 				}
-				if (obj == null || GetType() != obj.GetType())
+				if (obj == null || this.GetType() != obj.GetType())
 				{
 					return false;
 				}
 
 				var email = (Email)obj;
 
-				if (Primary != email.Primary)
+				if (this.Primary != email.Primary)
 				{
 					return false;
 				}
-				if (!Type?.Equals(email.Type) ?? email.Type != null)
+				if (!this.Type?.Equals(email.Type) ?? email.Type != null)
 				{
 					return false;
 				}
-				if (!Value?.Equals(email.Value) ?? email.Value != null)
+				if (!this.Value?.Equals(email.Value) ?? email.Value != null)
 				{
 					return false;
 				}
@@ -328,9 +328,9 @@
 			public override int GetHashCode()
 			{
 				//TODO: Need imutable hascode
-				var result = Value?.GetHashCode() ?? 0;
-				result = 31 * result + (Type?.GetHashCode() ?? 0);
-				result = 31 * result + (Primary ? 1 : 0);
+				var result = this.Value?.GetHashCode() ?? 0;
+				result = 31 * result + (this.Type?.GetHashCode() ?? 0);
+				result = 31 * result + (this.Primary ? 1 : 0);
 				return result;
 			}
 
@@ -350,17 +350,17 @@
 				public override bool Equals(object obj)
 				{
 					var other = obj as EmailType;
-					return other != null && other.name.Equals(name);
+					return other != null && other.name.Equals(this.name);
 				}
 
 				public override int GetHashCode()
 				{
-					return name.GetHashCode();
+					return this.name.GetHashCode();
 				}
 
 				public override string ToString()
 				{
-					return name;
+					return this.name;
 				}
 			}
 		}

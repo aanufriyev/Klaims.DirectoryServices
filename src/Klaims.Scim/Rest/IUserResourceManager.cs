@@ -1,7 +1,9 @@
 ﻿namespace Klaims.Scim.Rest
 {
+	using Klaims.Scim.Resources;
+
 	public interface IUserResourceManager<TUser> : IQueryableResourceManager<TUser>
-		where TUser : class
+		where TUser : ScimUser
 	{
 		TUser CreateUser(TUser user, string password);
 
