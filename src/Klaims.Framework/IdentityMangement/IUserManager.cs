@@ -1,11 +1,14 @@
 ﻿namespace Klaims.Framework.IdentityMangement
 {
 	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+
 	using Models;
 
 	public interface IUserManager<TUser> where TUser : User
 	{
-		IQueryableUserRepository<TUser> Queryable { get; }
+		IQueryableUserRepository<User> Queryable { get; }
 
 		void Create(TUser user);
 

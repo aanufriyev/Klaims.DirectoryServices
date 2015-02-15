@@ -18,6 +18,7 @@ namespace Klaims.Web
 	using System.Linq;
 
 	using Klaims.Scim.Rest;
+	using Klaims.Scim.Rest.Formatters;
 
 	using Microsoft.AspNet.Mvc;
 

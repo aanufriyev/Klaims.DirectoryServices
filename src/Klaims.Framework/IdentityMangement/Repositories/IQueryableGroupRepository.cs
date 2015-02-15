@@ -2,7 +2,7 @@
 {
 	using System.Linq;
 
-	public interface IGroupQuery<TGroup> : IGroupRepository<TGroup>
+	public interface IQueryableGroupRepository<TGroup> : IGroupRepository<TGroup>
 		where TGroup : class
 	{
 		IQueryable<TGroup> Groups { get; }

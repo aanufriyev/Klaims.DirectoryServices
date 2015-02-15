@@ -5,7 +5,7 @@ namespace Klaims.Scim.Endpoints
 	using Microsoft.AspNet.Mvc;
 
 
-	[Produces("application/scim+json")]
+	[Produces(ScimConstants.MediaType)]
 	public class ScimEndpoint : Controller
 	{
 

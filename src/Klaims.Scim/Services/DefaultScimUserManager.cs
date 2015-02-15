@@ -1,4 +1,4 @@
-﻿namespace Klaims.Scim.Rest
+﻿namespace Klaims.Scim.Services
 {
 	using System;
 	using System.Collections.Generic;
@@ -10,7 +10,7 @@
 	using Klaims.Scim.Query;
 	using Klaims.Scim.Resources;
 
-	public class ScimUserResourceResourceManager : IUserResourceManager<ScimUser>
+	public class DefaultScimUserManager : IScimUserManager
 	{
 		private static readonly List<ScimUser> Resources = new List<ScimUser>
 			                                                   {
@@ -25,7 +25,7 @@
 
 		private readonly IUserManager<User> userManager;
 
-		public ScimUserResourceResourceManager(IUserManager<User> userManager)
+		public DefaultScimUserManager(IUserManager<User> userManager)
 		{
 			this.userManager = userManager;
 			this.searchQueryConverter = new ScimSearchQueryConverter<User>();
@@ -41,7 +41,8 @@
 		{
 			Check.Argument.IsNotNullOrEmpty(filter, "filter");
 			// Looks like crap. Was bad idea to expose queryable.
-			this.userManager.Queryable.Query(q => q.Where(this.searchQueryConverter.Convert(filter, null, true)));
+			var predicate = this.searchQueryConverter.Convert(filter, null, true);
+            var results = this.userManager.Queryable.Search(predicate);
 			return new List<ScimUser>(Resources);
 		}
 

@@ -6,6 +6,7 @@ namespace Klaims.Scim.Query
 	using Klaims.Framework.IdentityMangement.Models;
 	using Klaims.Framework.Utility;
 	using Klaims.Scim.Query.Filter;
+	using Klaims.Scim.Services;
 
 	public class ScimSearchQueryConverter<T> : ISearchQueryConverter<T>
 		where T : User

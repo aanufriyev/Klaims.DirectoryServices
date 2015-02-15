@@ -1,4 +1,4 @@
-﻿namespace Klaims.Scim
+﻿namespace Klaims.Scim.Services
 {
 	public interface IAttributeNameMapper
 	{

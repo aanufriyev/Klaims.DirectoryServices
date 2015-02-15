@@ -1,4 +1,4 @@
-﻿namespace Klaims.Scim.Rest
+﻿namespace Klaims.Scim.Rest.Formatters
 {
 	using Microsoft.AspNet.Mvc;
 	using Microsoft.Net.Http.Headers;
@@ -13,8 +13,7 @@
 			this.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 			this.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
 			this.SupportedMediaTypes.Clear();
-			this.SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse("application/scim+json"));
-			
+			this.SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(ScimConstants.MediaType));
 		}
 	}
 }

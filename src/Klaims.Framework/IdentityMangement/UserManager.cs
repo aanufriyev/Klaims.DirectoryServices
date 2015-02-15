@@ -1,17 +1,21 @@
 namespace Klaims.Framework.IdentityMangement
 {
 	using System;
-	using Models;
+	using System.Collections.Generic;
+	using System.Linq;
+
+	using Klaims.Framework.IdentityMangement.Models;
 
 	public class UserManager : IUserManager<User>
 	{
-		public IQueryableUserRepository<User> Queryable
+		private readonly IUserRepository<User> userRepository;
+
+		public UserManager(IUserRepository<User> userRepository)
 		{
-			get
-			{
-				throw new NotImplementedException();
-			}
+			this.userRepository = userRepository;
 		}
+
+		public IQueryableUserRepository<User> Queryable => this.userRepository as IQueryableUserRepository<User>;
 
 		public void Create(User user)
 		{

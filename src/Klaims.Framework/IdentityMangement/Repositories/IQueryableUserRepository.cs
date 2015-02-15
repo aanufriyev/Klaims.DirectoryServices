@@ -3,15 +3,13 @@
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Linq.Expressions;
 
 	public interface IQueryableUserRepository<TUser> : IUserRepository<TUser>
 		where TUser : class
 	{
-		IQueryable<TUser> Users { get; }
-
-		IEnumerable<TUser> Query(Func<IQueryable<TUser>, IQueryable<TUser>> filter);
-
-		IEnumerable<TUser> Query(Func<IQueryable<TUser>, IQueryable<TUser>> filter, Func<IQueryable<TUser>, IQueryable<TUser>> sort, int skip, int count, out int totalCount);
+		IEnumerable<TUser> Search(Expression<Func<TUser, bool>> predicate);
+		IEnumerable<TUser> Search(Expression<Func<TUser, bool>> predicate, int skip, int count);
 
 	}
 }

@@ -6,6 +6,7 @@
 
 	using Klaims.Scim.Resources;
 	using Klaims.Scim.Rest;
+	using Klaims.Scim.Services;
 
 	using Microsoft.AspNet.Mvc;
 
@@ -14,9 +15,9 @@
 	[Route(ScimConstants.Routes.Templates.Users)]
 	public class UsersEndpoint : ScimEndpoint
 	{
-		private readonly IUserResourceManager<ScimUser> resourceManager;
+		private readonly IScimUserManager resourceManager;
 
-		public UsersEndpoint(IUserResourceManager<ScimUser> resourceManager)
+		public UsersEndpoint(IScimUserManager resourceManager)
 		{
 			this.resourceManager = resourceManager;
 		}
