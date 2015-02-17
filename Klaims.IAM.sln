@@ -11,6 +11,20 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Klaims.Scim", "src\Klaims.S
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Klaims.Core", "src\Klaims.Core\Klaims.Core.kproj", "{E859697B-CC0E-47CB-AE17-7374B507453D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{762C0C96-2755-49C4-BF50-8126FD55C950}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Klaims.Scim.Tests", "tests\Klaims.Scim.Tests\Klaims.Scim.Tests.kproj", "{F29EBA02-7FE3-442F-808D-050710B0C8A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0FFCA637-1F9A-4BB4-A4D3-FE95F10FCEED}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+	ProjectSection(FolderGlobals) = preProject
+		global_1json__JSONSchema = http://json.schemastore.org/global
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3466A3E3-A24A-419A-BA61-DBEF0E98FF51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,8 +47,19 @@ Global
 		{E859697B-CC0E-47CB-AE17-7374B507453D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E859697B-CC0E-47CB-AE17-7374B507453D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E859697B-CC0E-47CB-AE17-7374B507453D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F29EBA02-7FE3-442F-808D-050710B0C8A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F29EBA02-7FE3-442F-808D-050710B0C8A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F29EBA02-7FE3-442F-808D-050710B0C8A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F29EBA02-7FE3-442F-808D-050710B0C8A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D86D48D5-9CCA-4C44-81A1-D8F3DF8B3AE5} = {3466A3E3-A24A-419A-BA61-DBEF0E98FF51}
+		{97A8F605-279B-490D-A506-24392B4903D8} = {3466A3E3-A24A-419A-BA61-DBEF0E98FF51}
+		{A3A5E445-3E28-41B9-BAED-3E16D2B44B11} = {3466A3E3-A24A-419A-BA61-DBEF0E98FF51}
+		{E859697B-CC0E-47CB-AE17-7374B507453D} = {3466A3E3-A24A-419A-BA61-DBEF0E98FF51}
+		{F29EBA02-7FE3-442F-808D-050710B0C8A8} = {762C0C96-2755-49C4-BF50-8126FD55C950}
 	EndGlobalSection
 EndGlobal

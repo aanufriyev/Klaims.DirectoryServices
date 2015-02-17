@@ -8,7 +8,7 @@ namespace Klaims.Scim.Query.Filter
 
 	public class ScimFilterParser
 	{
-		public static ScimExpression Parse(string filter)
+		public static FilterNode Parse(string filter)
 		{
 			if (filter == null)
 			{
@@ -16,11 +16,11 @@ namespace Klaims.Scim.Query.Filter
 			}
 
 			var position = new Position();
-			ScimExpression node = null;
+			FilterNode node = null;
 			while (position.Value < filter.Length)
 			{
 				var @char = filter[position.Value];
-				ScimExpression next;
+				FilterNode next;
 				switch (@char)
 				{
 					case ' ':
@@ -42,14 +42,14 @@ namespace Klaims.Scim.Query.Filter
 			return node;
 		}
 
-		private static ScimExpression AddChildNode(ScimExpression parent, ScimExpression child)
+		private static FilterNode AddChildNode(FilterNode parent, FilterNode child)
 		{
 			if (parent == null)
 			{
 				return child;
 			}
 
-			var branchNode = parent as BranchExpression;
+			var branchNode = parent as BranchNode;
 			if (branchNode != null)
 			{
 				if (!branchNode.HasBothChildren)
@@ -57,7 +57,7 @@ namespace Klaims.Scim.Query.Filter
 					branchNode.AddNode(child);
 					return parent;
 				}
-				var childNode = child as BranchExpression;
+				var childNode = child as BranchNode;
 				if (childNode != null)
 				{
 					childNode.AddNode(branchNode);
@@ -65,7 +65,7 @@ namespace Klaims.Scim.Query.Filter
 				}
 			}
 
-			var node = child as BranchExpression;
+			var node = child as BranchNode;
 			if (node == null)
 			{
 				return null;
@@ -74,7 +74,7 @@ namespace Klaims.Scim.Query.Filter
 			return child;
 		}
 
-		private static ScimExpression ParseNode(Position position, string filter)
+		private static FilterNode ParseNode(Position position, string filter)
 		{
 			var attribute = ParseToken(position, filter);
 
@@ -86,7 +86,7 @@ namespace Klaims.Scim.Query.Filter
 				{
 					throw new InvalidOperationException("Invalid predicate in filter, expected an attribute or an operator token but found " + attribute);
 				}
-				return new BranchExpression(branchOperator);
+				return new BranchNode(branchOperator);
 			}
 
 			var filterOperator = Operator.GetByName(ParseToken(position, filter));
@@ -112,7 +112,7 @@ namespace Klaims.Scim.Query.Filter
 				throw new InvalidOperationException("Invalid predicate in filter, expected a non branching operator but found " + filterOperator);
 			}
 
-			return new TerminalExpression(filterOperator) { Attribute = attribute, Value = value };
+			return new TerminalNode(filterOperator) { Attribute = attribute, Value = value };
 		}
 
 		private static string ParseToken(Position pos, string filter)

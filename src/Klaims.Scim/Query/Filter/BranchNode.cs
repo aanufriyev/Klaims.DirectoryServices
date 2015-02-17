@@ -5,20 +5,20 @@ namespace Klaims.Scim.Query.Filter
 	using System;
 	using System.Text;
 
-	public class BranchExpression : ScimExpression
+	public class BranchNode : FilterNode
 	{
-		public BranchExpression(Operator filterOperator)
+		public BranchNode(Operator filterOperator)
 			: base(filterOperator)
 		{
 		}
 
 		public bool HasBothChildren => this.Left != null && this.Right != null;
 
-		public ScimExpression Left { get; private set; }
+		public FilterNode Left { get; private set; }
 
-		public ScimExpression Right { get; private set; }
+		public FilterNode Right { get; private set; }
 
-		public void AddNode(ScimExpression node)
+		public void AddNode(FilterNode node)
 		{
 			if (this.Left == null)
 			{
@@ -37,7 +37,7 @@ namespace Klaims.Scim.Query.Filter
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
-
+			sb.Append("(");
 			if (this.Left != null)
 			{
 				sb.Append(this.Left);
@@ -49,7 +49,7 @@ namespace Klaims.Scim.Query.Filter
 			{
 				sb.Append(this.Right);
 			}
-
+			sb.Append(")");
 			return sb.ToString();
 		}
 	}

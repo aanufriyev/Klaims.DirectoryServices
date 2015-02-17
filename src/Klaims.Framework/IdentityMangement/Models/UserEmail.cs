@@ -13,8 +13,8 @@
 
 		public virtual string Type { get; protected internal set; }
 
-		[EmailAddress]
-		[StringLength(254)]
+		//[EmailAddress]
+		//[StringLength(254)]
 		public virtual string Value { get; protected internal set; }
 	}
 }

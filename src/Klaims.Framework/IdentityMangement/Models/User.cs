@@ -11,7 +11,7 @@
 	{
 		public virtual Guid Id { get; protected internal set; }
 
-		[Required]
+		//[Required]
 		public virtual string Username { get; protected internal set; }
 
 		public virtual string DisplayName { get; protected internal set; }

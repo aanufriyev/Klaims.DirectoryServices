@@ -1,8 +1,8 @@
 ﻿namespace Klaims.Scim.Query.Filter
 {
-	public class TerminalExpression : ScimExpression
+	public class TerminalNode : FilterNode
 	{
-		public TerminalExpression(Operator filterOperation)
+		public TerminalNode(Operator filterOperation)
 			: base(filterOperation)
 		{
 		}

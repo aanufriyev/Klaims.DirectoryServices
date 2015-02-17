@@ -17,25 +17,25 @@ namespace Klaims.Scim.Query
 			return this.BuildExpression(filterNode, mapper, null);
 		}
 
-		private Expression<Func<T, bool>> BuildExpression(ScimExpression filter, IAttributeNameMapper mapper, string prefix)
+		private Expression<Func<T, bool>> BuildExpression(FilterNode filter, IAttributeNameMapper mapper, string prefix)
 		{
-			var branchNode = filter as BranchExpression;
+			var branchNode = filter as BranchNode;
 			if (branchNode != null)
 			{
 				var leftNodeExpression = this.BuildExpression(branchNode.Left, mapper, prefix);
 				var rightNodeExpression = this.BuildExpression(branchNode.Right, mapper, prefix);
 				if (filter.Operator.Equals(Operator.And))
 				{
-					return PredicateBuilder.False<T>().And(leftNodeExpression).And(rightNodeExpression);
+					return leftNodeExpression.And(rightNodeExpression);
 				}
 				if (filter.Operator.Equals(Operator.Or))
 				{
-					return PredicateBuilder.False<T>().Or(leftNodeExpression).Or(rightNodeExpression);
+					return leftNodeExpression.Or(rightNodeExpression);
 				}
 				throw new InvalidOperationException("Unsupported branch operator");
 			}
 
-			var terminalNode = filter as TerminalExpression;
+			var terminalNode = filter as TerminalNode;
 			if (terminalNode != null)
 			{
 				var parameter = Expression.Parameter(typeof(T));
@@ -48,7 +48,7 @@ namespace Klaims.Scim.Query
 					var propertyValue = property.Type == typeof(Guid) ? (object)Guid.Parse(terminalNode.Value) : terminalNode.Value;
 					expression = Expression.Equal(property, Expression.Convert(Expression.Constant(propertyValue), property.Type));
 				}
-				else if (filter.Operator.Equals(Operator.Eq))
+				else if (filter.Operator.Equals(Operator.Co))
 				{
 					var method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
 					expression = Expression.Call(property, method, Expression.Constant(terminalNode.Value, typeof(string)));
