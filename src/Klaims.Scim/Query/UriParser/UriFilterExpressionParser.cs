@@ -6,7 +6,7 @@ namespace Klaims.Scim.Query.Filter
 	using System.Collections.Generic;
 	using System.Text;
 
-	public class ScimFilterParser
+	public class UriFilterExpressionParser
 	{
 		public static FilterNode Parse(string filter)
 		{

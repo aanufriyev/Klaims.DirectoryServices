@@ -1,16 +1,14 @@
 namespace Klaims.Framework.IdentityMangement
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Linq;
 
 	using Klaims.Framework.IdentityMangement.Models;
 
-	public class UserManager : IUserManager<User>
+	public class DefaultUserAccountAccountManager : IUserAccountManager<User>
 	{
 		private readonly IUserRepository<User> userRepository;
 
-		public UserManager(IUserRepository<User> userRepository)
+		public DefaultUserAccountAccountManager(IUserRepository<User> userRepository)
 		{
 			this.userRepository = userRepository;
 		}
@@ -44,7 +42,7 @@ namespace Klaims.Framework.IdentityMangement
 
 		public User GetById(Guid id)
 		{
-			throw new NotImplementedException();
+			return this.userRepository.FindById(id);
 		}
 	}
 }

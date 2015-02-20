@@ -16,14 +16,14 @@ namespace Klaims.Scim.Tests
 		[Fact]
 		public void CanParseSimpleFilter()
 		{
-			var rootNode = ScimFilterParser.Parse(SimpleFilter);
+			var rootNode = UriFilterExpressionParser.Parse(SimpleFilter);
 			Assert.NotNull(rootNode);
 			Console.WriteLine(rootNode);
 		}
 		[Fact]
 		public void CanParseFilterWithPrecedence()
 		{
-			var rootNode = ScimFilterParser.Parse(PrecedenceFilter);
+			var rootNode = UriFilterExpressionParser.Parse(PrecedenceFilter);
 			Assert.NotNull(rootNode);
 			Console.WriteLine(rootNode);
 		}

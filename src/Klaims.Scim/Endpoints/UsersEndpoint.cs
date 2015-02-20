@@ -29,10 +29,10 @@
 			return new ScimListResponse<ScimUser>(queryResults, 1);
 		}
 
-		[HttpGet("{id}", Name = "GetByIdRoute")]
-		public ScimUser GetById(string id)
+		[HttpGet("{userId}", Name = "GetScimUserRoute")]
+		public ScimUser GetUser(string userId)
 		{
-			var result = this.resourceManager.GetById(id);
+			var result = this.resourceManager.FindById(userId);
 			if (result == null)
 			{
 				// this will be mappped later in filter

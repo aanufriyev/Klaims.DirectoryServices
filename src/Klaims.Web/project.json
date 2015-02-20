@@ -31,12 +31,7 @@
 		"ef": "EntityFramework.Commands"
 	},
 	"frameworks": {
-		"aspnet50": { },
-		"aspnetcore50": {
-			"dependencies": {
-				"System.Runtime": "4.0.20-beta-*"
-			}
-		}
+		"aspnet50": { }
 	},
 	"exclude": [
 		"wwwroot",

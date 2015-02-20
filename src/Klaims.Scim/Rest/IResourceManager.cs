@@ -3,7 +3,7 @@
 	public interface IResourceManager<TResource>
 		where TResource : class
 	{
-		TResource GetById(string id);
+		TResource FindById(string id);
 
 		TResource Create(TResource resource);
 

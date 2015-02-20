@@ -67,6 +67,10 @@
 			}
 		}
 
+		public List<Address> Addresses { get; set; }
+
+		public List<InstantMessagner> Ims { get; set; }
+
 		public string DisplayName { get; set; }
 
 		public string NickName { get; set; }
@@ -160,6 +164,8 @@
 			var number = new PhoneNumber { Value = newPhoneNumber };
 			this.PhoneNumbers.Add(number);
 		}
+
+
 
 		public sealed class Group
 		{
@@ -365,11 +371,128 @@
 			}
 		}
 
-		public sealed class PhoneNumber
+		public sealed class Address
 		{
-			public string Type { get; set; }
+			public AddressType Type { get; set; }
+			public string StreetAddress { get; set; }
+			public string Locality { get; set; }
+			public string Region { get; set; }
+			public string PostalCode { get; set; }
+			public string Country { get; set; }
+			public string Formatted { get; set; }
+			public bool? Primary { get; set; }
+
+
+			public override bool Equals(object obj)
+			{
+				if (this == obj)
+				{
+					return true;
+				}
+				if (obj == null || this.GetType() != obj.GetType())
+				{
+					return false;
+				}
+
+				var email = (Address)obj;
+
+				if (this.Primary != email.Primary)
+				{
+					return false;
+				}
+				if (!this.Type?.Equals(email.Type) ?? email.Type != null)
+				{
+					return false;
+				}
+				if (!this.Value?.Equals(email.Value) ?? email.Value != null)
+				{
+					return false;
+				}
+
+				return true;
+			}
+
+			public override int GetHashCode()
+			{
+				//TODO: Need imutable hascode
+				var result = this.Formatted?.GetHashCode() ?? 0;
+				result = 31 * result + (this.Type?.GetHashCode() ?? 0);
+				result = 31 * result + (this.Primary.GetValueOrDefault() ? 1 : 0);
+				return result;
+			}
+
+			public class AddressType
+			{
+				public static readonly AddressType Work = new AddressType("work");
+				public static readonly AddressType Home = new AddressType("home");
+				public static readonly AddressType Other = new AddressType("other");
+
+				private readonly string name;
+
+				private AddressType(string name)
+				{
+					this.name = name;
+				}
+
+				public override bool Equals(object obj)
+				{
+					var other = obj as AddressType;
+					return other != null && other.name.Equals(this.name);
+				}
+
+				public override int GetHashCode()
+				{
+					return this.name.GetHashCode();
+				}
+
+				public override string ToString()
+				{
+					return this.name;
+				}
+			}
+		}
+
+		public sealed class InstantMessagner
+		{
+			public InstantMessagnerType Type { get; set; }
 
 			public string Value { get; set; }
+
+			public class InstantMessagnerType :TypedEnum
+			{
+				public static readonly InstantMessagnerType Aim = new InstantMessagnerType("aim");
+				public static readonly InstantMessagnerType Gtalk = new InstantMessagnerType("gtalk");
+				public static readonly InstantMessagnerType Icq = new InstantMessagnerType("icq");
+				public static readonly InstantMessagnerType Xmpp = new InstantMessagnerType("xmpp");
+				public static readonly InstantMessagnerType Msn = new InstantMessagnerType("msn");
+				public static readonly InstantMessagnerType Skype = new InstantMessagnerType("skype");
+				public static readonly InstantMessagnerType Qq = new InstantMessagnerType("qq");
+				public static readonly InstantMessagnerType Yahoo = new InstantMessagnerType("yahoo");
+				public static readonly InstantMessagnerType Other = new InstantMessagnerType("other");
+
+				protected InstantMessagnerType(string name)
+					: base(name)
+				{
+				}
+			}
+		}
+
+		public sealed class PhoneNumber
+		{
+			public PhoneNumberType Type { get; set; }
+
+			public string Value { get; set; }
+
+			public class PhoneNumberType : TypedEnum
+			{
+				public static readonly PhoneNumberType Work = new PhoneNumberType("work");
+				public static readonly PhoneNumberType Home = new PhoneNumberType("home");
+
+				protected PhoneNumberType(string name)
+					: base(name)
+				{
+				}
+			}
 		}
 	}
 }

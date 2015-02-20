@@ -4,8 +4,7 @@
 
 	public interface IUserRepository<TUser> where TUser :class
 	{
-		TUser Create();
-		void Add(TUser item);
+		void Create(TUser item);
 		void Remove(TUser item);
 		void Update(TUser item);
 
