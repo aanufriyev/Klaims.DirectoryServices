@@ -14,19 +14,23 @@
 	public class DefaultScimUserManager : IScimUserManager
 	{
 		private readonly IFilterBinder filterBinder;
+
+		private readonly IAttributeNameMapper mapper;
+
 		private readonly IUserAccountManager<User> userAccountManager;
 
-		public DefaultScimUserManager(IUserAccountManager<User> userAccountManager, IFilterBinder filterBinder)
+		public DefaultScimUserManager(IUserAccountManager<User> userAccountManager, IFilterBinder filterBinder, IAttributeNameMapper mapper)
 		{
 			this.userAccountManager = userAccountManager;
 			this.filterBinder = filterBinder;
+			this.mapper = mapper;
 		}
 
 		public IEnumerable<ScimUser> Query(string filter)
 		{
 			Check.Argument.IsNotNullOrEmpty(filter, "filter");
 			var filterNode = UriFilterExpressionParser.Parse(filter);
-			var predicate = this.filterBinder.Bind<User>(filterNode, null, true);
+			var predicate = this.filterBinder.Bind<User>(filterNode, null, true, this.mapper);
 			var results = this.userAccountManager.Queryable.Search(predicate);
 			return results.Select(this.ToScimUser);
 		}
@@ -35,7 +39,7 @@
 		{
 			Check.Argument.IsNotNullOrEmpty(filter, "filter");
 			var filterNode = UriFilterExpressionParser.Parse(filter);
-			var predicate = this.filterBinder.Bind<User>(filterNode, null, true);
+			var predicate = this.filterBinder.Bind<User>(filterNode, null, true, this.mapper);
 			var results = this.userAccountManager.Queryable.Search(predicate);
 			return results.Select(this.ToScimUser);
 		}
@@ -79,7 +83,7 @@
 
 		private ScimUser ToScimUser(User user)
 		{
-			return new ScimUser(user.Id.ToString(),user.Username,user.GivenName,user.FamilyName);
+			return new ScimUser(user.Id.ToString(), user.Username, user.GivenName, user.FamilyName);
 		}
 	}
 }

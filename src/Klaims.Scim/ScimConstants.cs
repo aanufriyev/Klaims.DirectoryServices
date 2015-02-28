@@ -2,7 +2,7 @@
 {
     public class ScimConstants
     {
-	    public const string MediaType = "application/json+scim";
+	    public const string ScimMediaType = "application/json+scim";
 
         public class Routes
         {

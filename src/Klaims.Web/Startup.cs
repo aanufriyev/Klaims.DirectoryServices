@@ -17,8 +17,12 @@ namespace Klaims.Web
 {
 	using System.Linq;
 
+	using Klaims.Framework.IdentityMangement;
+	using Klaims.Framework.IdentityMangement.Models;
+	using Klaims.Scim.Query;
 	using Klaims.Scim.Rest;
 	using Klaims.Scim.Rest.Formatters;
+	using Klaims.Scim.Services;
 
 	using Microsoft.AspNet.Mvc;
 
@@ -40,16 +44,16 @@ namespace Klaims.Web
         // This method gets called by the runtime.
         public void ConfigureServices(IServiceCollection services)
         {
-			// Add MVC services to the services container.
 			services.AddMvc().Configure<MvcOptions>(options =>
 			{
 				options.OutputFormatters.Add(new ScimJsonOutputFormatter());
 			});
 
-			// Uncomment the following line to add Web API servcies which makes it easier to port Web API 2 controllers.
-			// You need to add Microsoft.AspNet.Mvc.WebApiCompatShim package to project.json
-			// services.AddWebApiConventions();
-
+	        services.AddTransient<IScimUserManager, DefaultScimUserManager>();
+			services.AddTransient<IUserAccountManager<User>, DefaultUserAccountManager>();
+			services.AddTransient<IUserAccountRepository<User>, InMemoryUserAccountRepository>();
+			services.AddTransient<IFilterBinder, DefaultFilterBinder>();
+			services.AddTransient<IAttributeNameMapper, DefaultAttributeNameMapper>();
 		}
 
         // Configure is called after ConfigureServices is called.
@@ -62,7 +66,7 @@ namespace Klaims.Web
             // Add the following to the request pipeline only in development environment.
             if (string.Equals(env.EnvironmentName, "Development", StringComparison.OrdinalIgnoreCase))
             {
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
                 app.UseErrorPage(ErrorPageOptions.ShowAll);
                 app.UseDatabaseErrorPage(DatabaseErrorPageOptions.ShowAll);
             }

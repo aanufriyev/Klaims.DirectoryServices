@@ -13,7 +13,7 @@
 			this.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 			this.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
 			this.SupportedMediaTypes.Clear();
-			this.SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(ScimConstants.MediaType));
+			this.SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(ScimConstants.ScimMediaType));
 		}
 	}
 }

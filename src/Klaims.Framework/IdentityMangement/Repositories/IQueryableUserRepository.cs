@@ -5,7 +5,7 @@
 	using System.Linq;
 	using System.Linq.Expressions;
 
-	public interface IQueryableUserRepository<TUser> : IUserRepository<TUser>
+	public interface IQueryableUserAccountRepository<TUser> : IUserAccountRepository<TUser>
 		where TUser : class
 	{
 		IEnumerable<TUser> Search(Expression<Func<TUser, bool>> predicate);

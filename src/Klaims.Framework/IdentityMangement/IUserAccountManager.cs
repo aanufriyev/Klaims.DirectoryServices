@@ -8,7 +8,7 @@
 
 	public interface IUserAccountManager<TAccount> where TAccount : User
 	{
-		IQueryableUserRepository<User> Queryable { get; }
+		IQueryableUserAccountRepository<User> Queryable { get; }
 
 		void Create(TAccount user);
 

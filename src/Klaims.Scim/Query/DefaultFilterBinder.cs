@@ -67,7 +67,16 @@ namespace Klaims.Scim.Query
 			}
 			else if (filter.Operator.Equals(Operator.Pr))
 			{
-				expression = Expression.NotEqual(property, Expression.Constant(null, property.Type));
+				// We need to counter guid and other non nullable value types. 
+				// If value cannot be null, then it is always present.
+				if (property.Type.IsValueType || Nullable.GetUnderlyingType(property.Type) == null)
+				{
+					expression = Expression.Constant(true);
+				}
+				else
+				{
+					expression = Expression.NotEqual(property, Expression.Constant(null, property.Type));
+				}
 			}
 			if (expression == null)
 			{

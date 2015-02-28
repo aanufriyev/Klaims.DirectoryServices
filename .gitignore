@@ -181,3 +181,13 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+#Asp.Net 5
+debugSettings.json
+project.lock.json
+**/wwwroot/lib/
+
+#Node/Bower
+bower_components/
+node_modules/
+node_modules

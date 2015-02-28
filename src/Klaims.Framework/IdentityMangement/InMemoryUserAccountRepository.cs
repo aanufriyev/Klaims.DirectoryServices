@@ -7,7 +7,7 @@
 
 	using Klaims.Framework.IdentityMangement.Models;
 
-	public class InMemoryUserAccountManager : IQueryableUserRepository<User>
+	public class InMemoryUserAccountRepository : IQueryableUserAccountRepository<User>
 	{
 		private static readonly List<User> Users = new List<User>
 			                                           {

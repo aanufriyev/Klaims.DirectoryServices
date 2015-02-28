@@ -4,16 +4,16 @@ namespace Klaims.Framework.IdentityMangement
 
 	using Klaims.Framework.IdentityMangement.Models;
 
-	public class DefaultUserAccountAccountManager : IUserAccountManager<User>
+	public class DefaultUserAccountManager : IUserAccountManager<User>
 	{
-		private readonly IUserRepository<User> userRepository;
+		private readonly IUserAccountRepository<User> userAccountRepository;
 
-		public DefaultUserAccountAccountManager(IUserRepository<User> userRepository)
+		public DefaultUserAccountManager(IUserAccountRepository<User> userAccountRepository)
 		{
-			this.userRepository = userRepository;
+			this.userAccountRepository = userAccountRepository;
 		}
 
-		public IQueryableUserRepository<User> Queryable => this.userRepository as IQueryableUserRepository<User>;
+		public IQueryableUserAccountRepository<User> Queryable => this.userAccountRepository as IQueryableUserAccountRepository<User>;
 
 		public void Create(User user)
 		{
@@ -42,7 +42,7 @@ namespace Klaims.Framework.IdentityMangement
 
 		public User GetById(Guid id)
 		{
-			return this.userRepository.FindById(id);
+			return this.userAccountRepository.FindById(id);
 		}
 	}
 }

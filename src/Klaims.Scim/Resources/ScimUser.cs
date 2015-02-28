@@ -394,22 +394,9 @@
 					return false;
 				}
 
-				var email = (Address)obj;
+				var target = (Address)obj;
 
-				if (this.Primary != email.Primary)
-				{
-					return false;
-				}
-				if (!this.Type?.Equals(email.Type) ?? email.Type != null)
-				{
-					return false;
-				}
-				if (!this.Value?.Equals(email.Value) ?? email.Value != null)
-				{
-					return false;
-				}
-
-				return true;
+				return this.GetHashCode().Equals(target.GetHashCode());
 			}
 
 			public override int GetHashCode()
