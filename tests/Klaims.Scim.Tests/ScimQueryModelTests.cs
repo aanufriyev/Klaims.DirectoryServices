@@ -17,11 +17,11 @@
 	{
 		private const string BasicFilter = "profileUrl pr and displayName co \"Employee\"";
 
-		private readonly List<User> testUsers = new List<User>
+		private readonly List<UserAccount> testUsers = new List<UserAccount>
 			                                        {
-				                                        new User { ProfileUrl = "http://myprofile.com", DisplayName = "BestEmployee" },
-														new User { ProfileUrl = "http://myprofile.com", DisplayName = "SomeEmployee" },
-                                                        new User { DisplayName = "BestEmployee" }
+				                                        new UserAccount { ProfileUrl = "http://myprofile.com", DisplayName = "BestEmployee" },
+														new UserAccount { ProfileUrl = "http://myprofile.com", DisplayName = "SomeEmployee" },
+                                                        new UserAccount { DisplayName = "BestEmployee" }
 			                                        };
 
 		[Fact]
@@ -32,7 +32,7 @@
 
 			var filterNode = UriFilterExpressionParser.Parse(BasicFilter);
 			var converter = new DefaultFilterBinder();
-			var predicate = converter.Bind<User>(filterNode, string.Empty, false, mapperMoq.Object);
+			var predicate = converter.Bind<UserAccount>(filterNode, string.Empty, false, mapperMoq.Object);
 			Assert.NotNull(predicate);
 
 			var usersCount = this.testUsers.AsQueryable().Count(predicate);

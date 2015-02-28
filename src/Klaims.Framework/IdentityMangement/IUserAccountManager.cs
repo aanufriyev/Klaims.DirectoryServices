@@ -6,9 +6,9 @@
 
 	using Models;
 
-	public interface IUserAccountManager<TAccount> where TAccount : User
+	public interface IUserAccountManager<TAccount> where TAccount : UserAccount
 	{
-		IQueryableUserAccountRepository<User> Queryable { get; }
+		IQueryableUserAccountRepository<UserAccount> Queryable { get; }
 
 		void Create(TAccount user);
 

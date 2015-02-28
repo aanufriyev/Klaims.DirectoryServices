@@ -8,8 +8,6 @@
 	public interface IQueryableUserAccountRepository<TUser> : IUserAccountRepository<TUser>
 		where TUser : class
 	{
-		IEnumerable<TUser> Search(Expression<Func<TUser, bool>> predicate);
-		IEnumerable<TUser> Search(Expression<Func<TUser, bool>> predicate, int skip, int count);
-
+		IEnumerable<TUser> Search(Expression<Func<TUser, bool>> predicate, int? skip, int? count);
 	}
 }

@@ -17,9 +17,9 @@
 
 		private readonly IAttributeNameMapper mapper;
 
-		private readonly IUserAccountManager<User> userAccountManager;
+		private readonly IUserAccountManager<UserAccount> userAccountManager;
 
-		public DefaultScimUserManager(IUserAccountManager<User> userAccountManager, IFilterBinder filterBinder, IAttributeNameMapper mapper)
+		public DefaultScimUserManager(IUserAccountManager<UserAccount> userAccountManager, IFilterBinder filterBinder, IAttributeNameMapper mapper)
 		{
 			this.userAccountManager = userAccountManager;
 			this.filterBinder = filterBinder;
@@ -30,8 +30,8 @@
 		{
 			Check.Argument.IsNotNullOrEmpty(filter, "filter");
 			var filterNode = UriFilterExpressionParser.Parse(filter);
-			var predicate = this.filterBinder.Bind<User>(filterNode, null, true, this.mapper);
-			var results = this.userAccountManager.Queryable.Search(predicate);
+			var predicate = this.filterBinder.Bind<UserAccount>(filterNode, null, true, this.mapper);
+			var results = this.userAccountManager.Queryable.Search(predicate, null, null);
 			return results.Select(this.ToScimUser);
 		}
 
@@ -39,8 +39,8 @@
 		{
 			Check.Argument.IsNotNullOrEmpty(filter, "filter");
 			var filterNode = UriFilterExpressionParser.Parse(filter);
-			var predicate = this.filterBinder.Bind<User>(filterNode, null, true, this.mapper);
-			var results = this.userAccountManager.Queryable.Search(predicate);
+			var predicate = this.filterBinder.Bind<UserAccount>(filterNode, null, true, this.mapper);
+			var results = this.userAccountManager.Queryable.Search(predicate, null, null);
 			return results.Select(this.ToScimUser);
 		}
 
@@ -81,7 +81,7 @@
 			throw new NotImplementedException();
 		}
 
-		private ScimUser ToScimUser(User user)
+		private ScimUser ToScimUser(UserAccount user)
 		{
 			return new ScimUser(user.Id.ToString(), user.Username, user.GivenName, user.FamilyName);
 		}

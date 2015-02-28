@@ -188,6 +188,5 @@ project.lock.json
 **/wwwroot/lib/
 
 #Node/Bower
-bower_components/
-node_modules/
+bower_components
 node_modules

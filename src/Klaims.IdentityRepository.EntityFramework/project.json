@@ -1,0 +1,14 @@
+﻿{
+	"version": "1.0.0-*",
+	"dependencies": {
+		"EntityFramework": "7.0.0-beta4-*",
+		"Klaims.Framework": ""
+	},
+
+    "frameworks" : {
+        "aspnet50" : { 
+            "dependencies": {
+            }
+        }
+    }
+}

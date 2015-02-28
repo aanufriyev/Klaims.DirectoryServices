@@ -4,43 +4,43 @@ namespace Klaims.Framework.IdentityMangement
 
 	using Klaims.Framework.IdentityMangement.Models;
 
-	public class DefaultUserAccountManager : IUserAccountManager<User>
+	public class DefaultUserAccountManager : IUserAccountManager<UserAccount>
 	{
-		private readonly IUserAccountRepository<User> userAccountRepository;
+		private readonly IUserAccountRepository<UserAccount> userAccountRepository;
 
-		public DefaultUserAccountManager(IUserAccountRepository<User> userAccountRepository)
+		public DefaultUserAccountManager(IUserAccountRepository<UserAccount> userAccountRepository)
 		{
 			this.userAccountRepository = userAccountRepository;
 		}
 
-		public IQueryableUserAccountRepository<User> Queryable => this.userAccountRepository as IQueryableUserAccountRepository<User>;
+		public IQueryableUserAccountRepository<UserAccount> Queryable => this.userAccountRepository as IQueryableUserAccountRepository<UserAccount>;
 
-		public void Create(User user)
+		public void Create(UserAccount user)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void Update(User user)
+		public void Update(UserAccount user)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void Delete(User user)
+		public void Delete(UserAccount user)
 		{
 			throw new NotImplementedException();
 		}
 
-		public User GetByUsername(string username)
+		public UserAccount GetByUsername(string username)
 		{
 			throw new NotImplementedException();
 		}
 
-		public User GetByEmail(string email)
+		public UserAccount GetByEmail(string email)
 		{
 			throw new NotImplementedException();
 		}
 
-		public User GetById(Guid id)
+		public UserAccount GetById(Guid id)
 		{
 			return this.userAccountRepository.FindById(id);
 		}

@@ -9,7 +9,6 @@
 	"frameworks": {
 		"aspnet50": {
 			"dependencies": {
-				
 			}
 		}
 	}

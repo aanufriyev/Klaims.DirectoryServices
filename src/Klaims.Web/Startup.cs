@@ -50,8 +50,8 @@ namespace Klaims.Web
 			});
 
 	        services.AddTransient<IScimUserManager, DefaultScimUserManager>();
-			services.AddTransient<IUserAccountManager<User>, DefaultUserAccountManager>();
-			services.AddTransient<IUserAccountRepository<User>, InMemoryUserAccountRepository>();
+			services.AddTransient<IUserAccountManager<UserAccount>, DefaultUserAccountManager>();
+			services.AddTransient<IUserAccountRepository<UserAccount>, InMemoryUserAccountRepository>();
 			services.AddTransient<IFilterBinder, DefaultFilterBinder>();
 			services.AddTransient<IAttributeNameMapper, DefaultAttributeNameMapper>();
 		}

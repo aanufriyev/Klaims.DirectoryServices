@@ -7,11 +7,11 @@
 
 	using Klaims.Framework.IdentityMangement.Models;
 
-	public class InMemoryUserAccountRepository : IQueryableUserAccountRepository<User>
+	public class InMemoryUserAccountRepository : IQueryableUserAccountRepository<UserAccount>
 	{
-		private static readonly List<User> Users = new List<User>
+		private static readonly List<UserAccount> Users = new List<UserAccount>
 			                                           {
-				                                           new User
+				                                           new UserAccount
 					                                           {
 						                                           Id = Guid.Parse("2819c223-7f76-453a-919d-413861904646"),
 						                                           Username = "bjensen@example.com",
@@ -20,44 +20,50 @@
 					                                           }
 			                                           };
 
-		public void Create(User item)
+		public void Create(UserAccount item)
 		{
 			Users.Add(item);
 		}
 
-		public void Remove(User item)
+		public void Remove(UserAccount item)
 		{
 			Users.Remove(item);
 		}
 
-		public void Update(User item)
+		public void Update(UserAccount item)
 		{
 			Users[Users.IndexOf(item)] = item;
 		}
 
-		public User FindById(Guid id)
+		public UserAccount FindById(Guid id)
 		{
 			return Users.FirstOrDefault(user => user.Id == id);
 		}
 
-		public User FindByUsername(string username)
+		public UserAccount FindByUsername(string username)
 		{
 			return Users.FirstOrDefault(user => user.Username == username);
 		}
 
-		public User FindByEmail(string email)
+		public UserAccount FindByEmail(string email)
 		{
 			return Users.FirstOrDefault(user => user.Emails.Any(e => e.Value == email));
 		}
 
-		public IEnumerable<User> Search(Expression<Func<User, bool>> predicate)
+		public IEnumerable<UserAccount> Search(Expression<Func<UserAccount, bool>> predicate, int? skip, int? count)
 		{
-			return Users.AsQueryable().Where(predicate).ToList();
+			var query = Users.AsQueryable().Where(predicate);
+			if (skip.HasValue)
+			{
+				query = query.Skip(skip.Value);
+			}
+			if (count.HasValue)
+			{
+				query = query.Take(count.Value);
+			}
+			return query.ToList();
 		}
 
-		public IEnumerable<User> Search(Expression<Func<User, bool>> predicate, int skip, int count)
-		{
-			return Users.AsQueryable().Where(predicate).Skip(skip).Take(count).ToList();
-		}
+		
 	}
 }

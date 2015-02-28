@@ -11,7 +11,7 @@
 			if (string.IsNullOrEmpty(template))
 			{
 				// Cant use format with and check here
-				throw new ArgumentException(string.Format(Resources.ArgumentCannotBeNullOrEmpty, "template"), "template");
+				throw new ArgumentException(string.Format(Resources.ArgumentCannotBeNullOrEmpty, "template"), nameof(template));
 			}
 
 			return string.Format(template, args);
