@@ -158,6 +158,7 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
+bower_components/
 
 # RIA/Silverlight projects
 Generated_Code/
@@ -187,6 +188,3 @@ debugSettings.json
 project.lock.json
 **/wwwroot/lib/
 
-#Node/Bower
-bower_components
-node_modules
