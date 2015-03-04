@@ -32,7 +32,7 @@
 			return new Guid(guidBytes);
 		}
 
-		public override bool GeneratesTemporaryValues => false;
+		public bool GeneratesTemporaryValues => false;
 	}
 	// From http://www.siepman.nl/blog/post/2013/10/28/ID-Sequential-Guid-COMB-Vs-Int-Identity-using-Entity-Framework.aspx
 	public class SequentialGuid

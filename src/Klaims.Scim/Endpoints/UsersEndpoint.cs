@@ -4,6 +4,7 @@
 
 	using System;
 
+	using Klaims.Scim.Exceptions;
 	using Klaims.Scim.Resources;
 	using Klaims.Scim.Rest;
 	using Klaims.Scim.Services;
@@ -35,8 +36,7 @@
 			var result = this.resourceManager.FindById(userId);
 			if (result == null)
 			{
-				// this will be mappped later in filter
-				throw new Exception("User not found");
+				throw new ScimResourceNotFoundException("Resource does not exist.");
 			}
 
 			return result;

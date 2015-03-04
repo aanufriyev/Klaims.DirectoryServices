@@ -11,9 +11,9 @@
 	{
 		public enum MemberType
 		{
-			USER,
+			User,
 
-			GROUP
+			Group
 		}
 
 		public enum Role
@@ -23,9 +23,9 @@
 			Writer
 		}
 
-		public static readonly List<Role> GROUP_MEMBER = new List<Role> { Role.Member };
+		public static readonly List<Role> GroupMember = new List<Role> { Role.Member };
 
-		public static readonly List<Role> GROUP_ADMIN = new List<Role> { Role.Reader, Role.Writer };
+		public static readonly List<Role> GroupAdmin = new List<Role> { Role.Reader, Role.Writer };
 
 		private string origin = Constants.Origin.Klaims;
 
@@ -34,7 +34,7 @@
 		}
 
 		public ScimGroupMember(string memberId)
-			: this(memberId, MemberType.USER, GROUP_MEMBER)
+			: this(memberId, MemberType.User, GroupMember)
 		{
 		}
 
@@ -57,7 +57,7 @@
 		{
 			get
 			{
-				return origin;
+				return this.origin;
 			}
 			set
 			{
@@ -65,37 +65,37 @@
 				{
 					throw new NullReferenceException();
 				}
-				origin = value;
+				this.origin = value;
 			}
 		}
 
 		public override string ToString()
 		{
-			return string.Format("(memberId: {0}, type: {1}, roles: {2})", MemberId, Type, Roles);
+			return $"(memberId: {this.MemberId}, type: {this.Type}, roles: {this.Roles})";
 		}
 
-		public override bool Equals(Object o)
+		public override bool Equals(object o)
 		{
 			if (this == o)
 			{
 				return true;
 			}
-			if (o == null || GetType() != o.GetType())
+			if (o == null || this.GetType() != o.GetType())
 			{
 				return false;
 			}
 
 			var that = (ScimGroupMember)o;
 
-			if (!MemberId.Equals(that.MemberId))
+			if (!this.MemberId.Equals(that.MemberId))
 			{
 				return false;
 			}
-			if (!origin.Equals(that.Origin))
+			if (!this.origin.Equals(that.Origin))
 			{
 				return false;
 			}
-			if (Type != that.Type)
+			if (this.Type != that.Type)
 			{
 				return false;
 			}
