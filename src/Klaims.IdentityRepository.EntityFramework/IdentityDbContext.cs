@@ -8,6 +8,11 @@
 	{
 		public DbSet<UserAccount> UserAccounts { get; set; }
 
+		public DbSet<UserEmail> UserEmails { get; set; }
+
+		public DbSet<UserPhone> UserPhones { get; set; }
+
+		public DbSet<UserClaim> UserClaims { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
@@ -19,6 +24,29 @@
 						b.Property(u => u.Version).ConcurrencyToken();
 					});
 
+			builder.Entity<UserClaim>(
+				b =>
+					{
+						b.Key(uc => uc.Id);
+						b.HasOne<UserAccount>().WithMany().ForeignKey(uc => uc.UserId);
+						b.ForRelational().Table("UserClaims");
+					});
+
+			builder.Entity<UserEmail>(
+				b =>
+					{
+						b.Key(rc => rc.Id);
+						b.HasOne<UserAccount>().WithMany().ForeignKey(rc => rc.UserId);
+						b.ForRelational().Table("UserEmails");
+					});
+
+			builder.Entity<UserPhone>(
+				b =>
+					{
+						b.Key(rc => rc.Id);
+						b.HasOne<UserPhone>().WithMany().ForeignKey(rc => rc.UserId);
+						b.ForRelational().Table("UserPhones");
+					});
 		}
 	}
 }

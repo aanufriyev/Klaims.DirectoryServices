@@ -11,7 +11,7 @@
 
 	using Microsoft.Data.Entity;
 
-	public class UserAccountRepository : IQueryableUserAccountRepository<UserAccount>
+	public class DatabaseUserAccountRepository : IQueryableUserAccountRepository<UserAccount>
 	{
 		public void Create(UserAccount account)
 		{
@@ -66,7 +66,12 @@
 
 		public IEnumerable<UserAccount> Search(Expression<Func<UserAccount, bool>> predicate, int? skip, int? count)
 		{
-			throw new NotImplementedException();
+			Check.Argument.IsNotNull(predicate, nameof(predicate));
+
+			using (var context = new IdentityDbContext())
+			{
+				return context.UserAccounts.Include(ua => ua.Claims).Include(ua => ua.Emails).Where(predicate).ToArray();
+			}
 		}
 	}
 }

@@ -19,6 +19,7 @@ namespace Klaims.Web
 
 	using Klaims.Framework.IdentityMangement;
 	using Klaims.Framework.IdentityMangement.Models;
+	using Klaims.IdentityManagement.EntityFramework;
 	using Klaims.Scim.Query;
 	using Klaims.Scim.Rest;
 	using Klaims.Scim.Rest.Formatters;
@@ -51,7 +52,7 @@ namespace Klaims.Web
 
 	        services.AddTransient<IScimUserManager, DefaultScimUserManager>();
 			services.AddTransient<IUserAccountManager<UserAccount>, DefaultUserAccountManager>();
-			services.AddTransient<IUserAccountRepository<UserAccount>, InMemoryUserAccountRepository>();
+			services.AddTransient<IUserAccountRepository<UserAccount>, DatabaseUserAccountRepository>();
 			services.AddTransient<IFilterBinder, DefaultFilterBinder>();
 			services.AddTransient<IAttributeNameMapper, DefaultAttributeNameMapper>();
 		}

@@ -21,7 +21,9 @@
 		"Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-*",
 		"Microsoft.Framework.ConfigurationModel": "1.0.0-beta4-*",
 		"Klaims.Framework": "",
+		"Klaims.IdentityRepository.EntityFramework": "",
 		"Klaims.Scim": ""
+
 
 	},
 	"commands": {
@@ -31,7 +33,7 @@
 		"ef": "EntityFramework.Commands"
 	},
 	"frameworks": {
-		"aspnet50": { }
+		"dnx451": { }
 	},
 	"exclude": [
 		"wwwroot",
